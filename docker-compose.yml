@@ -1,0 +1,169 @@
+version: '3.8'
+
+services:
+  airflow-cont:
+    build: .
+    container_name: airflow-cont
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
+      AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
+      AIRFLOW__CORE__TEST_CONNECTION: Enabled
+      AIRFLOW_DB_UPGRADE: 'true'
+      _AIRFLOW_WWW_USER_CREATE: 'true'
+      _AIRFLOW_WWW_USER_USERNAME: ujjawal
+      _AIRFLOW_WWW_USER_PASSWORD: ujjawalpassword
+      AIRFLOW_UID: 50000
+      JAVA_HOME: "/usr"
+      TZ: Asia/Kolkata
+    volumes:
+      - ./mnt/airflow.cfg:/opt/airflow/airflow.cfg
+      - ./mnt/webserver_config.py:/opt/airflow/webserver_config.py
+      - ./mnt/dags:/opt/airflow/dags
+      - ./spark-cluster/id_rsa:/home/airflow/.ssh/id_rsa
+      - ./spark-cluster/id_rsa.pub:/home/airflow/.ssh/id_rsa.pub
+      - ./spark-cluster/id_rsa.pub:/home/airflow/.ssh/authorized_keys
+    ports:
+      - 19000:8080
+    networks:
+      - airflow-network
+    restart: always
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "--fail",
+          "http://localhost:8080/health"
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "airflow" ]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: always
+    ports:
+      - 19001:5432
+    networks:
+      - airflow-network
+
+  spark-master:
+    build: ./spark-cluster
+    container_name: spark-master
+    ports:
+      - 9010:8080
+      - 1001:7077
+      - 1000:10000
+    volumes:
+      - ./spark-cluster/id_rsa:/root/.ssh/id_rsa
+      - ./spark-cluster/id_rsa.pub:/root/.ssh/id_rsa.pub
+      - ./spark-cluster/id_rsa.pub:/root/.ssh/authorized_keys
+      - ./spark-cluster/spark-jobs/:/home/
+    networks:
+      - airflow-network
+    mem_limit: 3g
+    mem_reservation: 512m
+    depends_on:
+      - spark-worker-1
+      - spark-worker-2
+
+  spark-worker-1:
+    build: ./spark-cluster
+    container_name: spark-worker-1
+    restart: always
+    ports:
+      - 9044:8080
+      - 9055:7077
+      - 9066:10000
+    volumes:
+      - ./spark-cluster/id_rsa.pub:/root/.ssh/authorized_keys
+    networks:
+      - airflow-network
+
+  spark-worker-2:
+    build: ./spark-cluster
+    container_name: spark-worker-2
+    restart: always
+    ports:
+      - 9077:8080
+      - 9088:7077
+      - 9099:10000
+    volumes:
+      - ./spark-cluster/id_rsa.pub:/root/.ssh/authorized_keys
+    networks:
+      - airflow-network
+
+  dbt-services:
+    build: ./dbt_integration/
+    volumes:
+      - ./dbt_integration/dbt-project/dbt_project:/home/dbt_postgres/dbt_project
+      - ./dbt_integration/dbt-project/dbt_oracle_project:/home/dbt_oracle/dbt_oracle_project
+      - ./dbt_integration/dbt-project/dbt_spark_project:/home/dbt_spark/dbt_spark_project
+      - ./dbt_integration/dbt-project/dbt_microsoft_sql_server:/home/dbt_mssql/dbt_microsoft_sql_server
+      - ./dbt_integration/.dbt:/root/.dbt/
+      - ./spark-cluster/id_rsa.pub:/root/.ssh/authorized_keys
+    ports:
+      - 9022:8081
+    environment:
+      - ORA_PYTHON_DRIVER_TYPE=thin
+    networks:
+      - airflow-network
+    depends_on:
+      - postgres-dbt-db
+      - orcl-db
+      - spark-master
+      - mssql-db
+
+  orcl-db:
+    image: container-registry.oracle.com/database/free:latest
+    restart: always
+    environment:
+      - ORACLE_PWD=Ujjawal@12345678
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - ORA_PYTHON_DRIVER_TYPE=thin
+    ports:
+      - 9033:1521
+    networks:
+      - airflow-network
+
+  mssql-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    environment:
+      - "ACCEPT_EULA=Y"
+      - "MSSQL_SA_PASSWORD=Ujjawal@password"
+    ports:
+      - 9014:1433
+    networks:
+      - airflow-network
+
+  postgres-dbt-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ujjawaldbtpostgres
+      POSTGRES_DB: dbt_postgres
+    ports:
+      - 9013:5432
+    networks:
+      - airflow-network
+
+networks:
+  airflow-network:
+    driver: bridge
