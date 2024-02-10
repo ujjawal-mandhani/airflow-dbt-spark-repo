@@ -12,7 +12,22 @@ docker-compose build
 docker-compose up -d
 ```
 
-### points 
+#### URLS
+Airflow url - http://0.0.0.0:19000/home
+Spark-cluster - 
 
-* Schedule spark jobs 
-* Schedule dbt dags 
+#### Screen shots 
+
+**Airflow UI**
+![alt text](src/image.png)
+
+**Spark UI**
+![alt text](src/spark-ui.png)
+
+**Variable list**
+![alt text](src/variable_list.png)
+
+**Connection list**
+![alt text](src/connection-1.png)
+![alt text](src/connection-2.png)
+![alt text](src/connection-3.png)
