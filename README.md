@@ -28,6 +28,14 @@ Spark-cluster -
 ![alt text](src/variable_list.png)
 
 **Connection list**
+###### dbt-container ssh connection 
+
 ![alt text](src/connection-1.png)
+
+###### spark-master ssh connection 
+
 ![alt text](src/connection-2.png)
+
+###### oracle db ssh connection 
+
 ![alt text](src/connection-3.png)
