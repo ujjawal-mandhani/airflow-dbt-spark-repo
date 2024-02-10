@@ -14,7 +14,7 @@ docker-compose up -d
 
 #### URLS
 Airflow url - http://0.0.0.0:19000/home
-Spark-cluster - 
+Spark-cluster - http://0.0.0.0:9010/
 
 #### Screen shots 
 
