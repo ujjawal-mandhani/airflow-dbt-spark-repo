@@ -27,6 +27,7 @@ Spark-cluster -
 **Variable list**
 
 oracle password you can get from dbt_integration/.dbt/profiles.yml
+
 sender_email and sender_password is configured from google smtp settings
 
 ![alt text](src/variable_list.png)
