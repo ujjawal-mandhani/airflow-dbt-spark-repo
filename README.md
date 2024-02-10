@@ -44,3 +44,7 @@ sender_email and sender_password is configured from google smtp settings
 ###### oracle db ssh connection 
 
 ![alt text](src/connection-3.png)
+
+###### Spark connection 
+
+![alt text](src/spark-conn.png)
