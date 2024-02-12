@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "8f5facc7-f833-4dbf-876c-cd2b4d08061d",
+		"name": "z - Airflow Apis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19749830"
+	},
+	"item": [
+		{
+			"name": "airflow-list-dags",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ujjawal",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ujjawalpassword",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:19000/api/v1/dags",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "19000",
+					"path": [
+						"api",
+						"v1",
+						"dags"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "airflow-dag-information",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ujjawal",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ujjawalpassword",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:19000/api/v1/dags/dbt-mssql-commands-using-ssh",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "19000",
+					"path": [
+						"api",
+						"v1",
+						"dags",
+						"dbt-mssql-commands-using-ssh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "airflow-dag-dagRuns",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ujjawal",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ujjawalpassword",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:19000/api/v1/dags/dbt-mssql-commands-using-ssh/dagRuns",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "19000",
+					"path": [
+						"api",
+						"v1",
+						"dags",
+						"dbt-mssql-commands-using-ssh",
+						"dagRuns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "airflow-list-users",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ujjawal",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ujjawalpassword",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:19000/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "19000",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "airflow-list-roles",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ujjawal",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ujjawalpassword",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:19000/api/v1/roles",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "19000",
+					"path": [
+						"api",
+						"v1",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "airflow-list-variables",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ujjawal",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ujjawalpassword",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:19000/api/v1/variables",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "19000",
+					"path": [
+						"api",
+						"v1",
+						"variables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "airflow-list-pools",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ujjawal",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ujjawalpassword",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:19000/api/v1/pools",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "19000",
+					"path": [
+						"api",
+						"v1",
+						"pools"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "airflow-list-connection",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ujjawal",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ujjawalpassword",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:19000/api/v1/connections",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "19000",
+					"path": [
+						"api",
+						"v1",
+						"connections"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
