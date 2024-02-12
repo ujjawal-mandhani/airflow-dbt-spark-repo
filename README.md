@@ -48,3 +48,8 @@ sender_email and sender_password is configured from google smtp settings
 ###### Spark connection 
 
 ![alt text](src/spark-conn.png)
+
+
+###### Postman Connection 
+
+![Postman Collection](src/postman_collection.png)
