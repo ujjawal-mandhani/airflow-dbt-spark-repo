@@ -1,5 +1,5 @@
 FROM apache/airflow
-RUN pip install apache-airflow-providers-apache-spark apache-airflow-providers-oracle apache-airflow-providers-smtp
+RUN pip install psycopg2-binary apache-airflow-providers-apache-spark apache-airflow-providers-oracle apache-airflow-providers-smtp apache-airflow-providers-amazon pandas
 USER root 
 RUN apt-get update -y && apt install default-jre default-jdk openssh-server -y
 ENV SPARK_VERSION 3.3.1
